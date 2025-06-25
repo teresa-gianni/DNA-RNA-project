@@ -1,0 +1,481 @@
+---
+title: "DNA_RNA_Project"
+author: "MM,TG,AR,AA,GT,VP,EG,AL"
+date: "2025-06-05"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Analysis of different levels of methylation between disease and control samples
+
+## 1. Load Raw Data with minfi and create an object called RGset storing the RGChannelSet object:
+
+```{r}
+# Install libraries for methylation analysis 
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("minfi")
+BiocManager::install("minfiData")
+
+```
+
+```{r}
+# Load required libraries for methylation analysis
+library(minfi)
+library(minfiData)
+library(qqman)
+library(gplots)
+
+setwd(".")
+baseDir <- ("../Input_Data")
+SampleSheet <- read.csv("../Input_Data/SampleSheet_Report_II.csv",header=T)
+targets <- read.metharray.sheet(baseDir) # read sample sheet metadata
+
+# Load raw methylation data into RGChannelSet object and save the raw data object
+RGset <- read.metharray.exp(targets = targets)
+save(RGset, file = "RGset.RData")
+```
+
+## 2. Create the dataframes Red and Green to store the red and green fluorescences respectively:
+
+```{r}
+# Extract raw red and green fluorescence intensities into two dataframes
+Red <- data.frame(getRed(RGset))
+dim(Red)
+head(Red)
+
+Green <- data.frame(getGreen(RGset))
+dim(Green)
+head(Green)
+```
+
+## 3. Extract the fluorescence values for the address 39802405, which corresponds to a type II probe.
+
+```{r}
+load("../Illumina450Manifest_clean.RData")
+
+# Retrieve probe type for the address 39802405
+Illumina450Manifest_clean[Illumina450Manifest_clean$AddressA_ID == "39802405",]
+
+# Extract red and green intensities for this address
+Red[rownames(Red) == "39802405",]
+Green[rownames(Green) == "39802405",]
+```
+
+## 4. Create the object MSet.raw:
+
+```{r}
+# Generate raw methylation set object from RGset and save the preprocessed object
+MSet.raw <- preprocessRaw(RGset)
+save(MSet.raw, file = "MSet_raw.RData")
+```
+
+## 5. Perform the following quality checks: QCplot, intensity of negative controls using minfi, detection pValues.
+
+```{r}
+# generate qc plot
+qc <- getQC(MSet.raw)
+qc
+plotQC(qc)
+
+# Visualize intensity of negative control probes
+controlStripPlot(RGset, controls = "NEGATIVE")
+
+# detection p-values for each probe
+detP <- detectionP(RGset) 
+save(detP, file = "detP.RData")
+
+load("detP.RData")
+
+failed <- detP > 0.01    # Flag probes with p > 0.01 as TRUE or FALSE
+nfailed <- colSums(failed) # Count the number of failed probes per sample
+nfailed
+head(failed)
+dim(failed)
+table(failed)
+```
+
+## 6. Calculate raw beta and M values and plot the densities of mean methylation values, dividing the samples in WT and MUT.
+
+By overlaying the two curves representing M values for WT and MUT, we
+observe a slight shift in the mutant curve toward the center. This
+suggests that there are more unmethylated sites in the MUT group
+compared to the WT. Looking at the density plot of the beta values, the
+WT samples show more pronounced peaks near 0 and 1. This indicates that
+in wild-type samples, there are more CpG sites that are either fully
+methylated or completely unmethylated across all cells. In contrast, the
+curve for the MUT group appears slightly more centered, which suggests a
+higher proportion of CpG sites with intermediate methylation
+levels—meaning that in mutants, some cells are methylated at a given
+site while others are not.
+
+```{r}
+MSet.raw 
+
+# Calculate beta values and convert to dataframe
+beta <- getBeta(MSet.raw)
+beta_df <- data.frame(beta)
+
+# Split the dataframe in WT (ctrl) and MUT (dis) samples for the beta values
+df_ctrl <- beta_df[, c("GSM5319592_200121140049_R01C02",
+"GSM5319607_3999547012_R03C02",
+"GSM5319615_3999547017_R04C01",
+"GSM5319616_3999547017_R06C01")]
+head(df_ctrl)
+dim(df_ctrl)
+
+df_dis <- beta_df[, !names(beta_df) %in% c("GSM5319592_200121140049_R01C02",
+"GSM5319607_3999547012_R03C02",
+"GSM5319615_3999547017_R04C01",
+"GSM5319616_3999547017_R06C01")]
+dim(df_dis)
+head(df_dis)
+
+# Compute mean beta values for WT and MUT groups
+mean_beta_ctrl <- apply(df_ctrl, 1, mean, na.rm=T)
+mean_beta_ctrl <- na.omit(mean_beta_ctrl)
+d_mean_beta_ctrl <- density(mean_beta_ctrl)
+mean_beta_dis <- apply(df_dis, 1, mean, na.rm=T)
+mean_beta_dis <- na.omit(mean_beta_dis)
+d_mean_beta_dis <- density(mean_beta_dis)
+
+# Plot density of beta values
+par(mfrow=c(2,1))
+plot(d_mean_beta_ctrl,main="Density of Beta Values in WT",col="magenta")
+plot(d_mean_beta_dis,main="Density of Beta Values in MUT",col="magenta")
+
+# Calculate M values
+M_df <- data.frame(getM(MSet.raw))
+
+# Split the dataframe in WT (ctrl) and MUT (dis) samples for the M values
+df_M_ctrl <- M_df[, c("GSM5319592_200121140049_R01C02",
+"GSM5319607_3999547012_R03C02",
+"GSM5319615_3999547017_R04C01",
+"GSM5319616_3999547017_R06C01")]
+
+df_M_dis <- M_df[, !names(M_df) %in% c("GSM5319592_200121140049_R01C02",
+"GSM5319607_3999547012_R03C02",
+"GSM5319615_3999547017_R04C01",
+"GSM5319616_3999547017_R06C01")]
+
+# Compute density for mean M values
+mean_M_ctrl <- apply(df_M_ctrl, 1, mean, na.rm=T)
+mean_M_ctrl <- na.omit(mean_M_ctrl)
+d_mean_M_ctrl <- density(mean_M_ctrl)
+
+mean_M_dis <- apply(df_M_dis, 1, mean, na.rm=T)
+mean_M_dis <- na.omit(mean_M_dis)
+d_mean_M_dis <- density(mean_M_dis)
+
+# Plot density of M values
+par(mfrow=c(2,1))
+plot(d_mean_M_ctrl,main="Density of M Values in WT",col="blue")
+plot(d_mean_M_dis,main="Density of M Values in MUT",col="blue")
+
+# Overlay WT vs MUT M-value curves
+plot(d_mean_M_ctrl, main = "Density of M Values: WT vs MUT", col = "aquamarine3", lwd = 2)
+lines(d_mean_M_dis, col = "red", lwd = 2)
+legend("topright",
+legend = c("WT", "MUT"),
+col = c("aquamarine3", "red"),
+lwd = 2)
+
+# Overlay WT vs MUT beta-value curves
+plot(d_mean_beta_ctrl, main = "Density of beta Values: WT vs MUT", col = "green", lwd = 2)
+lines(d_mean_beta_dis, col = "orange", lwd = 2)
+legend("topright",
+legend = c("WT", "MUT"),
+col = c("green", "orange"),
+lwd = 2)
+
+```
+
+## 7. Normalize the data using the function assigned to each group and compare raw data and normalized data. Produce a plot with 6 panels in which, for both raw and normalized data, you show the density plots of beta mean values according to the chemistry of the probes, the density plot of beta standard deviation values according to the chemistry of the probes and the boxplot of beta values. Provide a short comment about the changes you observe. Optional: do you think that the normalization approach that you used is appropriate considering this specific dataset? Try to color the boxplots according to the group (WT and MUT) and check whether the distribution of methylation values is different between the two groups, before and after normalization …
+
+```{r}
+
+#Standard deviation of Raw Data
+
+dfI <- Illumina450Manifest_clean[Illumina450Manifest_clean$Infinium_Design_Type=="I",]
+dfI <- droplevels(dfI)
+dfII <- Illumina450Manifest_clean[Illumina450Manifest_clean$Infinium_Design_Type=="II",]
+dfII <- droplevels(dfII)
+
+beta_I <- beta[rownames(beta) %in% dfI$IlmnID,]
+dim(beta_I)
+
+beta_II <- beta[rownames(beta) %in% dfII$IlmnID,]
+dim(beta_II)
+
+# For each probe in the mean_of_beta_I and mean_of_beta_II matrices, we calculate the mean of beta values across the 8 samples...
+mean_of_beta_I <- apply(beta_I,1,mean)
+mean_of_beta_II <- apply(beta_II,1,mean)
+
+# ... and then we calculate the density distribution of the 2 vectors of mean values:
+d_mean_of_beta_I <- density(mean_of_beta_I,na.rm=T)
+d_mean_of_beta_II <- density(mean_of_beta_II,na.rm=T)
+
+
+# For Raw data, we already have the matrix of beta values, the d_mean_of_beta_I and d_mean_of_beta_II objects; we need to calculate the densities of the standard deviations, which can be calculated using the function sd():
+sd_of_beta_I <- apply(beta_I,1,sd,na.rm=T)
+sd_of_beta_II <- apply(beta_II,1,sd,na.rm=T)
+d_sd_of_beta_I <- density(sd_of_beta_I,)
+sd_of_beta_II <- sd_of_beta_II[!is.na(sd_of_beta_II)]
+d_sd_of_beta_II <- density(sd_of_beta_II)
+
+RGset
+
+RGset_SWAN <- preprocessSWAN(RGset)
+
+RGset_SWAN
+head(RGset_SWAN)
+
+# You see that getBeta is among the accessor functions of a GenomicRatioSet class object
+beta_RGset_SWAN <- getBeta(RGset_SWAN)
+head(beta_RGset_SWAN)
+
+save(beta_RGset_SWAN, file="beta_RGset_SWAN.RData")
+
+# Now, as we have done before for raw data, we divide the beta_RGset_SWAN matrix according to type I and type II probes, calculate the mean and the standartd deviation for each probe across the 8 samples and calculate the density distributions
+beta_RGset_SWAN_I <- beta_RGset_SWAN[rownames(beta_RGset_SWAN) %in% dfI$IlmnID,]
+beta_RGset_SWAN_II <- beta_RGset_SWAN[rownames(beta_RGset_SWAN) %in% dfII$IlmnID,]
+
+mean_of_beta_RGset_SWAN_I <- apply(beta_RGset_SWAN_I,1,mean)
+mean_of_beta_RGset_SWAN_II <- apply(beta_RGset_SWAN_II,1,mean)
+
+d_mean_of_beta_RGset_SWAN_I <- density(mean_of_beta_RGset_SWAN_I,na.rm=T)
+d_mean_of_beta_RGset_SWAN_II <- density(mean_of_beta_RGset_SWAN_II,na.rm=T)
+
+sd_of_beta_RGset_SWAN_I <- apply(beta_RGset_SWAN_I,1,sd)
+sd_of_beta_RGset_SWAN_II <- apply(beta_RGset_SWAN_II,1,sd)
+
+d_sd_of_beta_RGset_SWAN_I <- density(sd_of_beta_RGset_SWAN_I,na.rm=T)
+d_sd_of_beta_RGset_SWAN_II <- density(sd_of_beta_RGset_SWAN_II,na.rm=T)
+
+
+#PLOTS
+
+par(mfrow=c(3,2))
+
+#Mean of beta Raw and Normalized Data
+plot(d_mean_of_beta_I,col="blue",main="Density Plot of Raw Beta mean values", xlab ="Beta Mean Values")
+lines(d_mean_of_beta_II,col="red")
+plot(d_mean_of_beta_RGset_SWAN_I,col="blue",main="Density Plot of Normalized Beta mean values", xlab="Beta Mean Values")
+lines(d_mean_of_beta_RGset_SWAN_II,col="red")
+
+#SD of beta Raw and Normalized Data
+plot(d_sd_of_beta_I,col="blue",main="Density Plot of Raw Beta Standard Deviation values", xlab= "Standard Deviation Values")
+lines(d_sd_of_beta_II,col="red")
+plot(d_sd_of_beta_RGset_SWAN_I,col="blue",main="Density Plot of Normalized Beta Standard Deviation values",  xlab= "Standard Deviation Values")
+lines(d_sd_of_beta_RGset_SWAN_II,col="red")
+
+#Boxplots
+
+beta_combined <- cbind(df_ctrl, df_dis)
+group_labels <- c(rep("WT", ncol(df_ctrl)), rep("MUT", ncol(df_dis)))
+group_colors <- ifelse(group_labels == "WT", "lightblue", "salmon")
+par(mar = c(5, 4, 4, 8)) 
+boxplot(beta_combined, col = group_colors, xaxt = "n", main = "Boxplot Raw Beta")
+abline(h = 0.6, col = "red", lty = 2, lwd = 1)
+short_names <- sapply(strsplit(colnames(beta_combined), "_"), `[`, 1)
+text(x = 1:length(short_names), y = par("usr")[3] - 0.02, labels = short_names,
+     srt = 45, adj = 1, xpd = TRUE)
+legend("topright", inset = c(-0.25, 0), xpd = NA,
+       legend = c("WT", "MUT"), fill = c("lightblue", "salmon"), bty = "n")
+
+sample_group <- targets$Group
+# the same for beta_RGset_SWAN
+beta_SWAN_WT <- beta_RGset_SWAN[, sample_group == "CTRL"]
+beta_SWAN_MUT <- beta_RGset_SWAN[, sample_group == "DIS"]
+
+beta_SWAN_combined <- cbind(beta_SWAN_WT, beta_SWAN_MUT)
+group_labels <- c(rep("WT", ncol(beta_SWAN_WT)), rep("MUT", ncol(beta_SWAN_MUT)))
+group_colors <- ifelse(group_labels == "WT", "lightblue", "salmon")
+par(mar = c(5, 4, 4, 8)) 
+boxplot(beta_SWAN_combined, col = group_colors, xaxt = "n", main = "Boxplot of Normalized Beta")
+abline(h = 0.6, col = "red", lty = 2, lwd = 1)
+short_names <- sapply(strsplit(colnames(beta_combined), "_"), `[`, 1)
+text(x = 1:length(short_names), y = par("usr")[3] - 0.02, labels = short_names, srt = 45, adj = 1, xpd = TRUE)
+legend("topright", inset = c(-0.25, 0), xpd = NA, legend = c("WT", "MUT"), fill = c("lightblue", "salmon"), bty = "n")
+```
+
+## 8. Perform a PCA on the matrix of normalized beta values generated in step 7, after normalization. Comment the plot (Do you see any outlier? Do the samples divide according to the group? Do they divide according to the sex of the samples? Do they divide according to the batch, that is the column Sentrix_ID?).
+
+```{r}
+SampleSheet
+pca_results <- prcomp(t(beta_RGset_SWAN), scale = T) # Run PCA on transposed methylation data (samples in rows)
+print(summary(pca_results))
+plot(pca_results) # Scree plot
+plot(pca_results$x[,1], pca_results$x[,2],cex=2,pch=2) # PC1 vs PC2 scatterplot
+text(pca_results$x[,1], pca_results$x[,2],labels=rownames(pca_results$x),pos=1)
+# Observation: One sample (GSM5319609_3999547016_R02C01) appears to be an outlier due to a high PC1 value (~1003) in contrast with almost all others with negative values.
+
+# Color samples by group
+SampleSheet$Group <- factor(SampleSheet$Group)
+levels(SampleSheet$Group)
+
+palette(c("orange","purple"))
+plot(pca_results$x[,1], pca_results$x[,2],cex=2,pch=2,col= SampleSheet$Group,xlab="PC1",ylab="PC2",xlim=c(-1000,1000),ylim=c(-1000,1000))
+text(pca_results$x[,1], pca_results$x[,2],labels=rownames(pca_results$x),cex=0.5,pos=1)
+legend("bottomright",legend=levels(SampleSheet$Group),col=c(1:nlevels(SampleSheet$Group)),pch=2)
+# Observation: There's no clear separation between diseased and control groups. Two diseased samples deviate, but the rest cluster with controls.
+
+
+# Color samples by sex
+SampleSheet$Sex <- factor(SampleSheet$Sex)
+palette(c("pink","blue"))
+plot(pca_results$x[,1], pca_results$x[,2],cex=2,pch=2,col=SampleSheet$Sex,xlab="PC1",ylab="PC2",xlim=c(-1000,1000),ylim=c(-1000,1000))
+text(pca_results$x[,1], pca_results$x[,2],labels=rownames(pca_results$x),cex=0.5,pos=1)
+legend("bottomright",legend=levels(SampleSheet$Sex),col=c(1:nlevels(SampleSheet$Sex)),pch=2)
+# Observation: Samples do not cluster by sex.
+
+# Color samples by Sentrix ID (array batch)
+SampleSheet$Sentrix_ID <- factor(SampleSheet$Sentrix_ID)
+
+palette(rainbow(nlevels(SampleSheet$Sentrix_ID)))
+plot(pca_results$x[,1], pca_results$x[,2],cex=2,pch=2,col=SampleSheet$Sentrix_ID,xlab="PC1",ylab="PC2",xlim=c(-1000,1000),ylim=c(-1000,1000))
+text(pca_results$x[,1], pca_results$x[,2],labels=rownames(pca_results$x),cex=0.5,pos=1)
+legend("bottomright",legend=levels(SampleSheet$Sentrix_ID),col=c(1:nlevels(SampleSheet$Sentrix_ID)),pch=2)
+# Comment: Samples with the same Sentrix ID tend to cluster together, indicating a possible batch effect. Furthermore, the two samples with positive PC1 consistently deviate from the others. 
+```
+
+## 9. Using the matrix of normalized beta values generated in step 7, identify differentially methylated probes between group WT and group MUT using the function assigned to each group.
+
+```{r}
+# Function to calculate p-value from t-test comparing groups for each probe
+p_values <- function(x) {
+  t_test <- t.test(x ~ SampleSheet$Group)
+  return(t_test$p.value)
+}
+
+p_value_ttest <- apply(beta_RGset_SWAN, 1, p_values)
+
+# Combine the p-values with the original beta values
+final_ttest <- data.frame(beta_RGset_SWAN, p_value_ttest)
+head(final_ttest)
+dim(final_ttest)
+
+# Order by ascending p-value
+final_ttest_o <- final_ttest[order(final_ttest$p_value_ttest),]
+head(final_ttest_o)
+
+# Filter the significant probes with p-value ≤ 0.05
+final_ttest_sig <- final_ttest_o[final_ttest_o$p_value_ttest<=0.05,]
+dim(final_ttest_sig)
+```
+
+## 10. Apply multiple test correction and set a significant threshold of 0.05. How many probes do you identify as differentially methylated considering nominal pValues? How many after Bonferroni correction? How many after BH correction?
+
+```{r}
+# Using raw t-test only (without correction), we get about 11,100 probes with p-value < 0.05
+
+# Apply Bonferroni correction
+final_ttest$p_value_Bon <- p.adjust(final_ttest$p_value_ttest, method = "bonferroni")
+final_ttest_Bon <- final_ttest[order(final_ttest$p_value_Bon), ]
+final_ttest_sig_Bon <- final_ttest_Bon[final_ttest_Bon$p_value_Bon <= 0.05, ]
+
+dim(final_ttest_sig_Bon)
+head(final_ttest_sig_Bon)
+
+# Apply Benjamini-Hochberg (FDR) correction
+final_ttest$p_value_BH <- p.adjust(final_ttest$p_value_ttest, method = "BH")
+final_ttest_BH <- final_ttest[order(final_ttest$p_value_BH), ]
+final_ttest_sig_BH <- final_ttest_BH[final_ttest_BH$p_value_BH <= 0.05, ]
+
+dim(final_ttest_sig_BH)
+head(final_ttest_sig_BH)
+
+# Observation: After multiple testing correction (Bonferroni or BH), no significant probes remain.
+```
+
+## 11. Produce a volcano plot of the results of differential methylation analysis
+
+```{r}
+# Select only the beta values (methylation levels) from the final_ttest dataframe
+beta_first <- final_ttest[,1:8]
+
+# Separate samples by group and compute mean beta value per probe for controls (CTRL)
+beta_first_CTRL <- beta_first[,SampleSheet$Group=="CTRL"]
+mean_beta_first_CTRL <- apply(beta_first_CTRL,1,mean)
+
+# Do the same for diseased samples (DIS)
+beta_first_DIS <- beta_first[,SampleSheet$Group=="DIS"]
+mean_beta_first_DIS <- apply(beta_first_DIS,1,mean)
+
+# Compute delta beta values: difference in average methylation between diseased and control groups
+delta_first <- mean_beta_first_DIS-mean_beta_first_CTRL
+head(delta_first)
+
+# Create a dataframe for the volcano plot: delta values and -log10(p-value)
+toVolcPlot <- data.frame(delta_first, -log10(final_ttest$p_value_ttest))
+head(toVolcPlot)
+
+# Basic volcano plot: delta (x-axis) vs -log10(p-value) (y-axis)
+plot(toVolcPlot[,1], toVolcPlot[,2],pch=16,cex=0.5)
+-log10(0.01)
+
+abline(h=-log10(0.01),col="red")
+
+# Highlight probes with delta > 0.1 and p-value < 0.01
+plot(toVolcPlot[,1], toVolcPlot[,2],pch=16,cex=0.5)
+toHighlight <- toVolcPlot[toVolcPlot[,1]>0.1 & toVolcPlot[,2]>(-log10(0.01)),]
+head(toHighlight)
+points(toHighlight[,1], toHighlight[,2],pch=16,cex=0.7,col="yellow")
+
+# Highlight probes with absolute delta > 0.1 and p-value < 0.01 (both directions)
+plot(toVolcPlot[,1], toVolcPlot[,2],pch=16,cex=0.5)
+toHighlight <- toVolcPlot[abs(toVolcPlot[,1])>0.1 & toVolcPlot[,2]>(-log10(0.01)),]
+head(toHighlight)
+points(toHighlight[,1], toHighlight[,2],pch=16,cex=0.7,col="red")
+```
+
+## 11. Manhattan plot
+
+```{r}
+final_ttest$IlmnID <- rownames(final_ttest)
+colnames(final_ttest)
+
+# Merge statistical results with Illumina probe annotation
+final_ttest_annotated <- merge(final_ttest, Illumina450Manifest_clean, by="IlmnID")
+dim(final_ttest_annotated)
+
+# Prepare data for the Manhattan plot
+input_Manhattan <- final_ttest_annotated[colnames(final_ttest_annotated) %in% c("IlmnID","CHR","MAPINFO","p_value_ttest")]
+dim(input_Manhattan)
+head(input_Manhattan)
+str(input_Manhattan$CHR)
+levels(input_Manhattan$CHR)
+
+# Set correct chromosome order (1–22, X, Y)
+order_chr <- c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y")
+input_Manhattan$CHR <- factor(input_Manhattan$CHR,levels=order_chr )
+levels(input_Manhattan$CHR)
+input_Manhattan$CHR <- as.numeric(input_Manhattan$CHR)
+table(input_Manhattan$CHR)
+
+# Basic Manhattan plot
+manhattan(input_Manhattan, snp="IlmnID",chr="CHR", bp="MAPINFO", p="p_value_ttest" )
+-log10(0.00001) # Log threshold to identify significance line
+# Manhattan plot with annotation of significant probes
+manhattan(input_Manhattan, snp="IlmnID",chr="CHR", bp="MAPINFO", p="p_value_ttest",annotatePval = 0.00001,col=rainbow(24) )
+```
+
+## 12. Produce an heatmap of the top 100 significant, differentially methylated probes.
+
+```{r}
+# Extract beta values of the top 100 significant probes (columns = samples)
+input_heatmap=as.matrix(final_ttest_sig[1:100,1:8])
+SampleSheet$Group
+colorbar <- c("green","red","red","green","red","red","green","green")
+
+
+# Generate heatmap with average linkage clustering on both rows and columns
+col2=colorRampPalette(c("green","black","red"))(100)
+heatmap.2(input_heatmap,col=col2,Rowv=T,Colv=T,hclustfun = function(x) hclust(x,method = 'average'),dendrogram="both",key=T,ColSideColors=colorbar,density.info="none",trace="none",scale="none",symm=F,main="Differentially methylated probes")
+```
