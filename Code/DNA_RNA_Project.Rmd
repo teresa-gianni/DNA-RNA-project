@@ -18,10 +18,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Install libraries for methylation analysis 
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("minfi")
-BiocManager::install("minfiData")
+# if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# BiocManager::install("minfi")
+# BiocManager::install("minfiData")
 
 ```
 
@@ -78,7 +78,7 @@ save(MSet.raw, file = "MSet_raw.RData")
 
 ## 5. Perform the following quality checks: QCplot, intensity of negative controls using minfi, detection pValues.
 
-```{r}
+```{r warning=FALSE}
 # generate qc plot
 qc <- getQC(MSet.raw)
 qc
@@ -115,7 +115,7 @@ higher proportion of CpG sites with intermediate methylation
 levels—meaning that in mutants, some cells are methylated at a given
 site while others are not.
 
-```{r}
+```{r fig.height=10, fig.width=10}
 MSet.raw 
 
 # Calculate beta values and convert to dataframe
