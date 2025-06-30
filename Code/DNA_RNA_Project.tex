@@ -1,0 +1,2173 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={DNA\_RNA\_Project},
+  pdfauthor={MM,TG,AR,AA,GT,VP,EG,AL},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{DNA\_RNA\_Project}
+\author{MM,TG,AR,AA,GT,VP,EG,AL}
+\date{2025-06-05}
+
+\begin{document}
+\maketitle
+
+\section{Analysis of different levels of methylation between disease and
+control
+samples}\label{analysis-of-different-levels-of-methylation-between-disease-and-control-samples}
+
+\subsection{1. Load Raw Data with minfi and create an object called
+RGset storing the RGChannelSet
+object:}\label{load-raw-data-with-minfi-and-create-an-object-called-rgset-storing-the-rgchannelset-object}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Install libraries for methylation analysis }
+\CommentTok{\# if (!require("BiocManager", quietly = TRUE))}
+\CommentTok{\#     install.packages("BiocManager")}
+\CommentTok{\# BiocManager::install("minfi")}
+\CommentTok{\# BiocManager::install("minfiData")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load required libraries for methylation analysis}
+\FunctionTok{library}\NormalTok{(minfi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: BiocGenerics
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'BiocGenerics'
+\end{verbatim}
+
+\begin{verbatim}
+## I seguenti oggetti sono mascherati da 'package:stats':
+## 
+##     IQR, mad, sd, var, xtabs
+\end{verbatim}
+
+\begin{verbatim}
+## I seguenti oggetti sono mascherati da 'package:base':
+## 
+##     anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+##     colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+##     get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+##     match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+##     Position, rank, rbind, Reduce, rownames, sapply, saveRDS, setdiff,
+##     table, tapply, union, unique, unsplit, which.max, which.min
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: GenomicRanges
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: stats4
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: S4Vectors
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'S4Vectors'
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:utils':
+## 
+##     findMatches
+\end{verbatim}
+
+\begin{verbatim}
+## I seguenti oggetti sono mascherati da 'package:base':
+## 
+##     expand.grid, I, unname
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: IRanges
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'IRanges'
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:grDevices':
+## 
+##     windows
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: GenomeInfoDb
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: SummarizedExperiment
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: MatrixGenerics
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: matrixStats
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'MatrixGenerics'
+\end{verbatim}
+
+\begin{verbatim}
+## I seguenti oggetti sono mascherati da 'package:matrixStats':
+## 
+##     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+##     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+##     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+##     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+##     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+##     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+##     colWeightedMeans, colWeightedMedians, colWeightedSds,
+##     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+##     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+##     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+##     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+##     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+##     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+##     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+##     rowWeightedSds, rowWeightedVars
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: Biobase
+\end{verbatim}
+
+\begin{verbatim}
+## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     'browseVignettes()'. To cite Bioconductor, see
+##     'citation("Biobase")', and for packages 'citation("pkgname")'.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'Biobase'
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:MatrixGenerics':
+## 
+##     rowMedians
+\end{verbatim}
+
+\begin{verbatim}
+## I seguenti oggetti sono mascherati da 'package:matrixStats':
+## 
+##     anyMissing, rowMedians
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: Biostrings
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: XVector
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'Biostrings'
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:base':
+## 
+##     strsplit
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: bumphunter
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: foreach
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: iterators
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: parallel
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: locfit
+\end{verbatim}
+
+\begin{verbatim}
+## locfit 1.5-9.12   2025-03-05
+\end{verbatim}
+
+\begin{verbatim}
+## Setting options('download.file.method.GEOquery'='auto')
+\end{verbatim}
+
+\begin{verbatim}
+## Setting options('GEOquery.inmemory.gpl'=FALSE)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(minfiData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: IlluminaHumanMethylation450kmanifest
+\end{verbatim}
+
+\begin{verbatim}
+## Caricamento del pacchetto richiesto: IlluminaHumanMethylation450kanno.ilmn12.hg19
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(qqman)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\begin{verbatim}
+## For example usage please run: vignette('qqman')
+\end{verbatim}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\begin{verbatim}
+## Citation appreciated but not required:
+\end{verbatim}
+
+\begin{verbatim}
+## Turner, (2018). qqman: an R package for visualizing GWAS results using Q-Q and manhattan plots. Journal of Open Source Software, 3(25), 731, https://doi.org/10.21105/joss.00731.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gplots)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Caricamento pacchetto: 'gplots'
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:IRanges':
+## 
+##     space
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:S4Vectors':
+## 
+##     space
+\end{verbatim}
+
+\begin{verbatim}
+## Il seguente oggetto è mascherato da 'package:stats':
+## 
+##     lowess
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"."}\NormalTok{)}
+\NormalTok{baseDir }\OtherTok{\textless{}{-}}\NormalTok{ (}\StringTok{"../Input\_Data"}\NormalTok{)}
+\NormalTok{SampleSheet }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"../Input\_Data/SampleSheet\_Report\_II.csv"}\NormalTok{, }\AttributeTok{header =}
+\NormalTok{                          T)}
+\NormalTok{targets }\OtherTok{\textless{}{-}} \FunctionTok{read.metharray.sheet}\NormalTok{(baseDir) }\CommentTok{\# read sample sheet metadata}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [read.metharray.sheet] Found the following CSV files:
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "../Input_Data/SampleSheet_Report_II.csv"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load raw methylation data into RGChannelSet object and save the raw data object}
+\NormalTok{RGset }\OtherTok{\textless{}{-}} \FunctionTok{read.metharray.exp}\NormalTok{(}\AttributeTok{targets =}\NormalTok{ targets)}
+\FunctionTok{save}\NormalTok{(RGset, }\AttributeTok{file =} \StringTok{"RGset.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{2. Create the dataframes Red and Green to store the red and
+green fluorescences
+respectively.}\label{create-the-dataframes-red-and-green-to-store-the-red-and-green-fluorescences-respectively.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract raw red and green fluorescence intensities into two dataframes}
+\NormalTok{Red }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{getRed}\NormalTok{(RGset))}
+\FunctionTok{dim}\NormalTok{(Red)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 622399      8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(Red)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## 10600313                            322                          159
+## 10600322                            361                          231
+## 10600328                           1522                          469
+## 10600336                           4916                         3034
+## 10600345                            875                          252
+## 10600353                            596                          205
+##          GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## 10600313                          303                          419
+## 10600322                          553                          919
+## 10600328                         1682                         2301
+## 10600336                         9117                        13823
+## 10600345                         1168                         1326
+## 10600353                          556                          860
+##          GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## 10600313                          294                          346
+## 10600322                          127                          731
+## 10600328                         1163                         1085
+## 10600336                         2664                        10864
+## 10600345                          457                         1828
+## 10600353                          477                          444
+##          GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## 10600313                          523                          491
+## 10600322                          943                          574
+## 10600328                         1708                         1250
+## 10600336                        12023                        11925
+## 10600345                         2138                          899
+## 10600353                          632                          478
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Green }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{getGreen}\NormalTok{(RGset))}
+\FunctionTok{dim}\NormalTok{(Green)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 622399      8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(Green)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## 10600313                            134                           53
+## 10600322                           3109                         1160
+## 10600328                           1764                          669
+## 10600336                            566                          336
+## 10600345                           1558                          277
+## 10600353                           1903                          476
+##          GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## 10600313                          124                          198
+## 10600322                         3546                         5033
+## 10600328                         2246                         2497
+## 10600336                          873                         1279
+## 10600345                         1147                         1555
+## 10600353                         1967                         1994
+##          GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## 10600313                          133                          157
+## 10600322                          694                         4135
+## 10600328                         1820                         1229
+## 10600336                          275                          804
+## 10600345                          558                         2103
+## 10600353                         1632                         1595
+##          GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## 10600313                          146                          146
+## 10600322                         4955                         3743
+## 10600328                         1827                         1645
+## 10600336                         1012                          986
+## 10600345                         2053                         1323
+## 10600353                         2719                         1889
+\end{verbatim}
+
+\subsection{3. Extract the fluorescence values for the address 39802405,
+which corresponds to a type II
+probe.}\label{extract-the-fluorescence-values-for-the-address-39802405-which-corresponds-to-a-type-ii-probe.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{load}\NormalTok{(}\StringTok{"../Illumina450Manifest\_clean.RData"}\NormalTok{)}
+
+\CommentTok{\# Retrieve probe type for the address 39802405}
+
+\NormalTok{probe\_type }\OtherTok{\textless{}{-}}\NormalTok{ Illumina450Manifest\_clean[Illumina450Manifest\_clean}\SpecialCharTok{$}\NormalTok{AddressA\_ID }\SpecialCharTok{==} \StringTok{"39802405"}\NormalTok{, }\StringTok{"Infinium\_Design\_Type"}\NormalTok{]}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"The probe type is: "}\NormalTok{ , probe\_type))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The probe type is: II"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract red and green intensities for this address}
+\NormalTok{Red[}\FunctionTok{rownames}\NormalTok{(Red) }\SpecialCharTok{==} \StringTok{"39802405"}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## 39802405                           1843                          877
+##          GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## 39802405                         2779                         3807
+##          GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## 39802405                         1248                         4105
+##          GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## 39802405                         5057                         5272
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Green[}\FunctionTok{rownames}\NormalTok{(Green) }\SpecialCharTok{==} \StringTok{"39802405"}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## 39802405                           3523                         1345
+##          GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## 39802405                          434                         5099
+##          GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## 39802405                          331                          452
+##          GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## 39802405                          600                          596
+\end{verbatim}
+
+\subsection{4. Create the object
+MSet.raw:}\label{create-the-object-mset.raw}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generate raw methylation set object from RGset and save the preprocessed object}
+\NormalTok{MSet.raw }\OtherTok{\textless{}{-}} \FunctionTok{preprocessRaw}\NormalTok{(RGset)}
+\FunctionTok{save}\NormalTok{(MSet.raw, }\AttributeTok{file =} \StringTok{"MSet\_raw.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{5. Perform the following quality checks: QCplot, intensity
+of negative controls using minfi, detection
+pValues.}\label{perform-the-following-quality-checks-qcplot-intensity-of-negative-controls-using-minfi-detection-pvalues.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# generate qc plot}
+\NormalTok{qc }\OtherTok{\textless{}{-}} \FunctionTok{getQC}\NormalTok{(MSet.raw)}
+\NormalTok{qc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## DataFrame with 8 rows and 2 columns
+##                                     mMed      uMed
+##                                <numeric> <numeric>
+## GSM5319592_200121140049_R01C02  10.26327   9.76321
+## GSM5319603_3999356129_R02C02     8.62205   8.82018
+## GSM5319604_3999547012_R02C01    10.35094  10.23721
+## GSM5319607_3999547012_R03C02    10.79360  10.90313
+## GSM5319609_3999547016_R02C01     8.82655   8.83289
+## GSM5319613_3999547017_R02C01    10.83684  10.69523
+## GSM5319615_3999547017_R04C01    11.15038  11.04644
+## GSM5319616_3999547017_R06C01    10.27845  10.33316
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotQC}\NormalTok{(qc)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-6-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Visualize intensity of negative control probes}
+\FunctionTok{controlStripPlot}\NormalTok{(RGset, }\AttributeTok{controls =} \StringTok{"NEGATIVE"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-6-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# detection p{-}values for each probe}
+\NormalTok{detP }\OtherTok{\textless{}{-}} \FunctionTok{detectionP}\NormalTok{(RGset)}
+\FunctionTok{save}\NormalTok{(detP, }\AttributeTok{file =} \StringTok{"detP.RData"}\NormalTok{)}
+
+\FunctionTok{load}\NormalTok{(}\StringTok{"detP.RData"}\NormalTok{)}
+
+\NormalTok{failed }\OtherTok{\textless{}{-}}\NormalTok{ detP }\SpecialCharTok{\textgreater{}} \FloatTok{0.01}    \CommentTok{\# Flag probes with p \textgreater{} 0.01 as TRUE or FALSE}
+\NormalTok{nfailed }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(failed) }\CommentTok{\# Count the number of failed probes per sample}
+\NormalTok{nfailed}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## GSM5319592_200121140049_R01C02   GSM5319603_3999356129_R02C02 
+##                            303                            563 
+##   GSM5319604_3999547012_R02C01   GSM5319607_3999547012_R03C02 
+##                           1702                            611 
+##   GSM5319609_3999547016_R02C01   GSM5319613_3999547017_R02C01 
+##                           4555                            573 
+##   GSM5319615_3999547017_R04C01   GSM5319616_3999547017_R06C01 
+##                            467                            994
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(failed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## cg00050873                          FALSE                        FALSE
+## cg00212031                          FALSE                        FALSE
+## cg00213748                          FALSE                        FALSE
+## cg00214611                          FALSE                        FALSE
+## cg00455876                          FALSE                        FALSE
+## cg01707559                          FALSE                        FALSE
+##            GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## cg00050873                         TRUE                        FALSE
+## cg00212031                         TRUE                        FALSE
+## cg00213748                         TRUE                        FALSE
+## cg00214611                         TRUE                        FALSE
+## cg00455876                        FALSE                        FALSE
+## cg01707559                        FALSE                        FALSE
+##            GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## cg00050873                        FALSE                         TRUE
+## cg00212031                        FALSE                        FALSE
+## cg00213748                         TRUE                         TRUE
+## cg00214611                         TRUE                         TRUE
+## cg00455876                        FALSE                        FALSE
+## cg01707559                        FALSE                        FALSE
+##            GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## cg00050873                         TRUE                        FALSE
+## cg00212031                         TRUE                         TRUE
+## cg00213748                         TRUE                         TRUE
+## cg00214611                         TRUE                         TRUE
+## cg00455876                        FALSE                        FALSE
+## cg01707559                        FALSE                        FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(failed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512      8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(failed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## failed
+##   FALSE    TRUE 
+## 3874328    9768
+\end{verbatim}
+
+\subsection{6. Calculate raw beta and M values and plot the densities of
+mean methylation values, dividing the samples in WT and
+MUT.}\label{calculate-raw-beta-and-m-values-and-plot-the-densities-of-mean-methylation-values-dividing-the-samples-in-wt-and-mut.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MSet.raw}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class: MethylSet 
+## dim: 485512 8 
+## metadata(0):
+## assays(2): Meth Unmeth
+## rownames(485512): cg00050873 cg00212031 ... ch.22.47579720R
+##   ch.22.48274842R
+## rowData names(0):
+## colnames(8): GSM5319592_200121140049_R01C02
+##   GSM5319603_3999356129_R02C02 ... GSM5319615_3999547017_R04C01
+##   GSM5319616_3999547017_R06C01
+## colData names(7): SampleID Sex ... Basename filenames
+## Annotation
+##   array: IlluminaHumanMethylation450k
+##   annotation: ilmn12.hg19
+## Preprocessing
+##   Method: Raw (no normalization or bg correction)
+##   minfi version: 1.52.1
+##   Manifest version: 0.4.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate beta values and convert to dataframe}
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FunctionTok{getBeta}\NormalTok{(MSet.raw)}
+\NormalTok{beta\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(beta)}
+
+\CommentTok{\# Split the dataframe in WT (ctrl) and MUT (dis) samples for the beta values}
+\NormalTok{df\_ctrl }\OtherTok{\textless{}{-}}\NormalTok{ beta\_df[, }\FunctionTok{c}\NormalTok{(}
+  \StringTok{"GSM5319592\_200121140049\_R01C02"}\NormalTok{,}
+  \StringTok{"GSM5319607\_3999547012\_R03C02"}\NormalTok{,}
+  \StringTok{"GSM5319615\_3999547017\_R04C01"}\NormalTok{,}
+  \StringTok{"GSM5319616\_3999547017\_R06C01"}
+\NormalTok{)]}
+\FunctionTok{head}\NormalTok{(df\_ctrl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319592_200121140049_R01C02 GSM5319607_3999547012_R03C02
+## cg00050873                     0.93364780                   0.93726011
+## cg00212031                     0.12357955                   0.05748638
+## cg00213748                     0.80153846                   0.79600000
+## cg00214611                     0.09612817                   0.06747475
+## cg00455876                     0.73064289                   0.79484979
+## cg01707559                     0.12267218                   0.05405405
+##            GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## cg00050873                    0.6075697                    0.6316411
+## cg00212031                    0.4135021                    0.4558304
+## cg00213748                    0.4945946                    0.5161905
+## cg00214611                    0.6016771                    0.4931507
+## cg00455876                    0.3516896                    0.2846238
+## cg01707559                    0.3304416                    0.3521289
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(df\_ctrl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512      4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_dis }\OtherTok{\textless{}{-}}\NormalTok{ beta\_df[, }\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(beta\_df) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"GSM5319592\_200121140049\_R01C02"}\NormalTok{,}
+  \StringTok{"GSM5319607\_3999547012\_R03C02"}\NormalTok{,}
+  \StringTok{"GSM5319615\_3999547017\_R04C01"}\NormalTok{,}
+  \StringTok{"GSM5319616\_3999547017\_R06C01"}
+\NormalTok{)]}
+\FunctionTok{dim}\NormalTok{(df\_dis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512      4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(df\_dis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319603_3999356129_R02C02 GSM5319604_3999547012_R02C01
+## cg00050873                   0.88015897                    0.6303940
+## cg00212031                   0.14744802                    0.4436090
+## cg00213748                   0.79831933                    0.4548944
+## cg00214611                   0.09731114                    0.4304636
+## cg00455876                   0.60161409                    0.2426729
+## cg01707559                   0.13912232                    0.2847222
+##            GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## cg00050873                    0.6656299                    0.4894958
+## cg00212031                    0.3770492                    0.4256506
+## cg00213748                    0.5703125                    0.4123711
+## cg00214611                    0.4604905                    0.6588542
+## cg00455876                    0.2680608                    0.2503840
+## cg01707559                    0.3046407                    0.3928171
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compute mean beta values for WT and MUT groups}
+\NormalTok{mean\_beta\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(df\_ctrl, }\DecValTok{1}\NormalTok{, mean, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{mean\_beta\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(mean\_beta\_ctrl)}
+\NormalTok{d\_mean\_beta\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_beta\_ctrl)}
+\NormalTok{mean\_beta\_dis }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(df\_dis, }\DecValTok{1}\NormalTok{, mean, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{mean\_beta\_dis }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(mean\_beta\_dis)}
+\NormalTok{d\_mean\_beta\_dis }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_beta\_dis)}
+
+\CommentTok{\# Plot density of beta values}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(d\_mean\_beta\_ctrl, }\AttributeTok{main =} \StringTok{"Density of Beta Values in WT"}\NormalTok{, }\AttributeTok{col =} \StringTok{"magenta"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(d\_mean\_beta\_dis, }\AttributeTok{main =} \StringTok{"Density of Beta Values in MUT"}\NormalTok{, }\AttributeTok{col =} \StringTok{"magenta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate M values}
+\NormalTok{M\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{getM}\NormalTok{(MSet.raw))}
+
+\CommentTok{\# Split the dataframe in WT (ctrl) and MUT (dis) samples for the M values}
+\NormalTok{df\_M\_ctrl }\OtherTok{\textless{}{-}}\NormalTok{ M\_df[, }\FunctionTok{c}\NormalTok{(}
+  \StringTok{"GSM5319592\_200121140049\_R01C02"}\NormalTok{,}
+  \StringTok{"GSM5319607\_3999547012\_R03C02"}\NormalTok{,}
+  \StringTok{"GSM5319615\_3999547017\_R04C01"}\NormalTok{,}
+  \StringTok{"GSM5319616\_3999547017\_R06C01"}
+\NormalTok{)]}
+
+\NormalTok{df\_M\_dis }\OtherTok{\textless{}{-}}\NormalTok{ M\_df[, }\SpecialCharTok{!}\FunctionTok{names}\NormalTok{(M\_df) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"GSM5319592\_200121140049\_R01C02"}\NormalTok{,}
+  \StringTok{"GSM5319607\_3999547012\_R03C02"}\NormalTok{,}
+  \StringTok{"GSM5319615\_3999547017\_R04C01"}\NormalTok{,}
+  \StringTok{"GSM5319616\_3999547017\_R06C01"}
+\NormalTok{)]}
+
+\CommentTok{\# Compute density for mean M values}
+\NormalTok{mean\_M\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(df\_M\_ctrl, }\DecValTok{1}\NormalTok{, mean, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{mean\_M\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(mean\_M\_ctrl)}
+\NormalTok{d\_mean\_M\_ctrl }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_M\_ctrl)}
+
+\NormalTok{mean\_M\_dis }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(df\_M\_dis, }\DecValTok{1}\NormalTok{, mean, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{mean\_M\_dis }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(mean\_M\_dis)}
+\NormalTok{d\_mean\_M\_dis }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_M\_dis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot density of M values}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(d\_mean\_M\_ctrl, }\AttributeTok{main =} \StringTok{"Density of M Values in WT"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(d\_mean\_M\_dis, }\AttributeTok{main =} \StringTok{"Density of M Values in MUT"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-8-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Overlay WT vs MUT M{-}value curves}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  d\_mean\_M\_ctrl,}
+  \AttributeTok{main =} \StringTok{"Density of M Values: WT vs MUT"}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"aquamarine3"}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_M\_dis, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"aquamarine3"}\NormalTok{, }\StringTok{"red"}\NormalTok{),}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-9-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Overlay WT vs MUT beta{-}value curves}
+\FunctionTok{plot}\NormalTok{(d\_mean\_beta\_ctrl,}
+     \AttributeTok{main =} \StringTok{"Density of beta Values: WT vs MUT"}\NormalTok{,}
+     \AttributeTok{col =} \StringTok{"green"}\NormalTok{,}
+     \AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_beta\_dis, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{, }\StringTok{"orange"}\NormalTok{),}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-10-1.pdf}}
+
+Observation: By overlaying the two curves representing M values for WT
+and MUT, we observe a slight shift in the mutant curve toward the
+center. This suggests that there are more unmethylated sites in the MUT
+group compared to the WT. Looking at the density plot of the beta
+values, the WT samples show more pronounced peaks near 0 and 1. This
+indicates that in wild-type samples, there are more CpG sites that are
+either fully methylated or completely unmethylated across all cells. In
+contrast, the curve for the MUT group appears slightly more centered,
+which suggests a higher proportion of CpG sites with intermediate
+methylation levels---meaning that in mutants, some cells are methylated
+at a given site while others are not.
+
+\subsection{7. Normalize the data using the function preprocessSWAN and
+compare raw data and normalized data between MUT and
+WT.}\label{normalize-the-data-using-the-function-preprocessswan-and-compare-raw-data-and-normalized-data-between-mut-and-wt.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Standard deviation of Raw Data}
+
+\NormalTok{dfI }\OtherTok{\textless{}{-}}\NormalTok{ Illumina450Manifest\_clean[Illumina450Manifest\_clean}\SpecialCharTok{$}\NormalTok{Infinium\_Design\_Type }\SpecialCharTok{==}
+                                   \StringTok{"I"}\NormalTok{, ]}
+\NormalTok{dfI }\OtherTok{\textless{}{-}} \FunctionTok{droplevels}\NormalTok{(dfI)}
+\NormalTok{dfII }\OtherTok{\textless{}{-}}\NormalTok{ Illumina450Manifest\_clean[Illumina450Manifest\_clean}\SpecialCharTok{$}\NormalTok{Infinium\_Design\_Type }\SpecialCharTok{==}
+                                    \StringTok{"II"}\NormalTok{, ]}
+\NormalTok{dfII }\OtherTok{\textless{}{-}} \FunctionTok{droplevels}\NormalTok{(dfII)}
+
+\NormalTok{beta\_I }\OtherTok{\textless{}{-}}\NormalTok{ beta[}\FunctionTok{rownames}\NormalTok{(beta) }\SpecialCharTok{\%in\%}\NormalTok{ dfI}\SpecialCharTok{$}\NormalTok{IlmnID, ]}
+\FunctionTok{dim}\NormalTok{(beta\_I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 135476      8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta\_II }\OtherTok{\textless{}{-}}\NormalTok{ beta[}\FunctionTok{rownames}\NormalTok{(beta) }\SpecialCharTok{\%in\%}\NormalTok{ dfII}\SpecialCharTok{$}\NormalTok{IlmnID, ]}
+\FunctionTok{dim}\NormalTok{(beta\_II)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 350036      8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# For each probe in the mean\_of\_beta\_I and mean\_of\_beta\_II matrices, we calculate the mean of beta values across the 8 samples...}
+\NormalTok{mean\_of\_beta\_I }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_I, }\DecValTok{1}\NormalTok{, mean)}
+\NormalTok{mean\_of\_beta\_II }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_II, }\DecValTok{1}\NormalTok{, mean)}
+
+\CommentTok{\# ... and then we calculate the density distribution of the 2 vectors of mean values:}
+\NormalTok{d\_mean\_of\_beta\_I }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_of\_beta\_I, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{d\_mean\_of\_beta\_II }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_of\_beta\_II, }\AttributeTok{na.rm =}\NormalTok{ T)}
+
+
+\CommentTok{\# For Raw data, we already have the matrix of beta values, the d\_mean\_of\_beta\_I and d\_mean\_of\_beta\_II objects; we need to calculate the densities of the standard deviations, which can be calculated using the function sd():}
+\NormalTok{sd\_of\_beta\_I }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_I, }\DecValTok{1}\NormalTok{, sd, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{sd\_of\_beta\_II }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_II, }\DecValTok{1}\NormalTok{, sd, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{d\_sd\_of\_beta\_I }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(sd\_of\_beta\_I, )}
+\NormalTok{sd\_of\_beta\_II }\OtherTok{\textless{}{-}}\NormalTok{ sd\_of\_beta\_II[}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(sd\_of\_beta\_II)]}
+\NormalTok{d\_sd\_of\_beta\_II }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(sd\_of\_beta\_II)}
+
+\NormalTok{RGset}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class: RGChannelSet 
+## dim: 622399 8 
+## metadata(0):
+## assays(2): Green Red
+## rownames(622399): 10600313 10600322 ... 74810490 74810492
+## rowData names(0):
+## colnames(8): GSM5319592_200121140049_R01C02
+##   GSM5319603_3999356129_R02C02 ... GSM5319615_3999547017_R04C01
+##   GSM5319616_3999547017_R06C01
+## colData names(7): SampleID Sex ... Basename filenames
+## Annotation
+##   array: IlluminaHumanMethylation450k
+##   annotation: ilmn12.hg19
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{RGset\_SWAN }\OtherTok{\textless{}{-}} \FunctionTok{preprocessSWAN}\NormalTok{(RGset)}
+
+\NormalTok{RGset\_SWAN}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class: MethylSet 
+## dim: 485512 8 
+## metadata(0):
+## assays(2): Meth Unmeth
+## rownames(485512): cg00050873 cg00212031 ... ch.22.47579720R
+##   ch.22.48274842R
+## rowData names(0):
+## colnames(8): GSM5319592_200121140049_R01C02
+##   GSM5319603_3999356129_R02C02 ... GSM5319615_3999547017_R04C01
+##   GSM5319616_3999547017_R06C01
+## colData names(7): SampleID Sex ... Basename filenames
+## Annotation
+##   array: IlluminaHumanMethylation450k
+##   annotation: ilmn12.hg19
+## Preprocessing
+##   Method: SWAN (based on a MethylSet preprocesses as 'Raw (no normalization or bg correction)'
+##   minfi version: 1.52.1
+##   Manifest version: 0.4.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(RGset\_SWAN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class: MethylSet 
+## dim: 6 8 
+## metadata(0):
+## assays(2): Meth Unmeth
+## rownames(6): cg00050873 cg00212031 ... cg00455876 cg01707559
+## rowData names(0):
+## colnames(8): GSM5319592_200121140049_R01C02
+##   GSM5319603_3999356129_R02C02 ... GSM5319615_3999547017_R04C01
+##   GSM5319616_3999547017_R06C01
+## colData names(7): SampleID Sex ... Basename filenames
+## Annotation
+##   array: IlluminaHumanMethylation450k
+##   annotation: ilmn12.hg19
+## Preprocessing
+##   Method: SWAN (based on a MethylSet preprocesses as 'Raw (no normalization or bg correction)'
+##   minfi version: 1.52.1
+##   Manifest version: 0.4.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# You see that getBeta is among the accessor functions of a GenomicRatioSet class object}
+\NormalTok{beta\_RGset\_SWAN }\OtherTok{\textless{}{-}} \FunctionTok{getBeta}\NormalTok{(RGset\_SWAN)}
+\FunctionTok{head}\NormalTok{(beta\_RGset\_SWAN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## cg00050873                      0.9192193                    0.8556647
+## cg00212031                      0.1366043                    0.1477547
+## cg00213748                      0.7559429                    0.7653214
+## cg00214611                      0.1099899                    0.1024328
+## cg00455876                      0.7072706                    0.5548413
+## cg01707559                      0.1289585                    0.1336012
+##            GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## cg00050873                    0.5769896                   0.90549679
+## cg00212031                    0.4043243                   0.06321223
+## cg00213748                    0.4128596                   0.72473868
+## cg00214611                    0.3921381                   0.07343885
+## cg00455876                    0.2259414                   0.73143021
+## cg01707559                    0.2630529                   0.05790620
+##            GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## cg00050873                    0.6146261                    0.4257168
+## cg00212031                    0.3391934                    0.3674561
+## cg00213748                    0.5056604                    0.3667118
+## cg00214611                    0.4108108                    0.5903479
+## cg00455876                    0.2483286                    0.2228430
+## cg01707559                    0.2933663                    0.3333333
+##            GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## cg00050873                    0.5516373                    0.5578825
+## cg00212031                    0.3701843                    0.4042891
+## cg00213748                    0.4501085                    0.4598099
+## cg00214611                    0.5478490                    0.4429735
+## cg00455876                    0.3120857                    0.2507317
+## cg01707559                    0.2911864                    0.3076923
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{save}\NormalTok{(beta\_RGset\_SWAN, }\AttributeTok{file =} \StringTok{"beta\_RGset\_SWAN.RData"}\NormalTok{)}
+
+\CommentTok{\# Now, as we have done before for raw data, we divide the beta\_RGset\_SWAN matrix according to type I and type II probes, calculate the mean and the standartd deviation for each probe across the 8 samples and calculate the density distributions}
+\NormalTok{beta\_RGset\_SWAN\_I }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[}\FunctionTok{rownames}\NormalTok{(beta\_RGset\_SWAN) }\SpecialCharTok{\%in\%}\NormalTok{ dfI}\SpecialCharTok{$}\NormalTok{IlmnID, ]}
+\NormalTok{beta\_RGset\_SWAN\_II }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[}\FunctionTok{rownames}\NormalTok{(beta\_RGset\_SWAN) }\SpecialCharTok{\%in\%}\NormalTok{ dfII}\SpecialCharTok{$}\NormalTok{IlmnID, ]}
+
+\NormalTok{mean\_of\_beta\_RGset\_SWAN\_I }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_RGset\_SWAN\_I, }\DecValTok{1}\NormalTok{, mean)}
+\NormalTok{mean\_of\_beta\_RGset\_SWAN\_II }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_RGset\_SWAN\_II, }\DecValTok{1}\NormalTok{, mean)}
+
+\NormalTok{d\_mean\_of\_beta\_RGset\_SWAN\_I }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_of\_beta\_RGset\_SWAN\_I, }\AttributeTok{na.rm =}
+\NormalTok{                                         T)}
+\NormalTok{d\_mean\_of\_beta\_RGset\_SWAN\_II }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(mean\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{na.rm =}
+\NormalTok{                                          T)}
+
+\NormalTok{sd\_of\_beta\_RGset\_SWAN\_I }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_RGset\_SWAN\_I, }\DecValTok{1}\NormalTok{, sd)}
+\NormalTok{sd\_of\_beta\_RGset\_SWAN\_II }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_RGset\_SWAN\_II, }\DecValTok{1}\NormalTok{, sd)}
+
+\NormalTok{d\_sd\_of\_beta\_RGset\_SWAN\_I }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(sd\_of\_beta\_RGset\_SWAN\_I, }\AttributeTok{na.rm =}\NormalTok{ T)}
+\NormalTok{d\_sd\_of\_beta\_RGset\_SWAN\_II }\OtherTok{\textless{}{-}} \FunctionTok{density}\NormalTok{(sd\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{na.rm =}
+\NormalTok{                                        T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#PLOTS}
+
+
+
+\CommentTok{\#Mean of beta Raw and Normalized Data}
+\FunctionTok{plot}\NormalTok{(d\_mean\_of\_beta\_I,}
+     \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Density Plot of Raw Beta mean values"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Beta Mean Values"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_of\_beta\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-12-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  d\_mean\_of\_beta\_RGset\_SWAN\_I,}
+  \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+  \AttributeTok{main =} \StringTok{"Density Plot of Normalized Beta mean values"}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"Beta Mean Values"}
+\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-13-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#SD of beta Raw and Normalized Data}
+\FunctionTok{plot}\NormalTok{(d\_sd\_of\_beta\_I,}
+     \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Density Plot of Raw Beta Standard Deviation values"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Standard Deviation Values"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_sd\_of\_beta\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-14-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  d\_sd\_of\_beta\_RGset\_SWAN\_I,}
+  \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+  \AttributeTok{main =} \StringTok{"Density Plot of Normalized Beta Standard Deviation values"}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"Standard Deviation Values"}
+\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_sd\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Boxplots}
+
+\NormalTok{beta\_combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(df\_ctrl, df\_dis)}
+\NormalTok{group\_labels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df\_ctrl)), }\FunctionTok{rep}\NormalTok{(}\StringTok{"MUT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df\_dis)))}
+\NormalTok{group\_colors }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(group\_labels }\SpecialCharTok{==} \StringTok{"WT"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\FunctionTok{boxplot}\NormalTok{(beta\_combined,}
+        \AttributeTok{col =}\NormalTok{ group\_colors,}
+        \AttributeTok{xaxt =} \StringTok{"n"}\NormalTok{,}
+        \AttributeTok{main =} \StringTok{"Boxplot Raw Beta"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{h =} \FloatTok{0.6}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{1}
+\NormalTok{)}
+\NormalTok{short\_names }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(beta\_combined), }\StringTok{"\_"}\NormalTok{), }\StringTok{\textasciigrave{}}\AttributeTok{[}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+  \AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(short\_names),}
+  \AttributeTok{y =} \FunctionTok{par}\NormalTok{(}\StringTok{"usr"}\NormalTok{)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{0.02}\NormalTok{,}
+  \AttributeTok{labels =}\NormalTok{ short\_names,}
+  \AttributeTok{srt =} \DecValTok{45}\NormalTok{,}
+  \AttributeTok{adj =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{xpd =} \ConstantTok{TRUE}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{inset =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+  \AttributeTok{xpd =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{),}
+  \AttributeTok{bty =} \StringTok{"n"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-16-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sample\_group }\OtherTok{\textless{}{-}}\NormalTok{ targets}\SpecialCharTok{$}\NormalTok{Group}
+\CommentTok{\# the same for beta\_RGset\_SWAN}
+\NormalTok{beta\_SWAN\_WT }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[, sample\_group }\SpecialCharTok{==} \StringTok{"CTRL"}\NormalTok{]}
+\NormalTok{beta\_SWAN\_MUT }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[, sample\_group }\SpecialCharTok{==} \StringTok{"DIS"}\NormalTok{]}
+
+\NormalTok{beta\_SWAN\_combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(beta\_SWAN\_WT, beta\_SWAN\_MUT)}
+\NormalTok{group\_labels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(beta\_SWAN\_WT)), }\FunctionTok{rep}\NormalTok{(}\StringTok{"MUT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(beta\_SWAN\_MUT)))}
+\NormalTok{group\_colors }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(group\_labels }\SpecialCharTok{==} \StringTok{"WT"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\FunctionTok{boxplot}\NormalTok{(beta\_SWAN\_combined,}
+        \AttributeTok{col =}\NormalTok{ group\_colors,}
+        \AttributeTok{xaxt =} \StringTok{"n"}\NormalTok{,}
+        \AttributeTok{main =} \StringTok{"Boxplot of Normalized Beta"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{h =} \FloatTok{0.6}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{1}
+\NormalTok{)}
+\NormalTok{short\_names }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(beta\_combined), }\StringTok{"\_"}\NormalTok{), }\StringTok{\textasciigrave{}}\AttributeTok{[}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+  \AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(short\_names),}
+  \AttributeTok{y =} \FunctionTok{par}\NormalTok{(}\StringTok{"usr"}\NormalTok{)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{0.02}\NormalTok{,}
+  \AttributeTok{labels =}\NormalTok{ short\_names,}
+  \AttributeTok{srt =} \DecValTok{45}\NormalTok{,}
+  \AttributeTok{adj =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{xpd =} \ConstantTok{TRUE}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{inset =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+  \AttributeTok{xpd =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{),}
+  \AttributeTok{bty =} \StringTok{"n"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-17-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#PLOT with 6 panels, confronting raw and normalized data}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\#Mean of beta Raw and Normalized Data}
+\FunctionTok{plot}\NormalTok{(d\_mean\_of\_beta\_I,}
+     \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Density Plot of Raw Beta mean values"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Beta Mean Values"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_of\_beta\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  d\_mean\_of\_beta\_RGset\_SWAN\_I,}
+  \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+  \AttributeTok{main =} \StringTok{"Density Plot of Normalized Beta mean values"}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"Beta Mean Values"}
+\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_mean\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+
+\CommentTok{\#SD of beta Raw and Normalized Data}
+\FunctionTok{plot}\NormalTok{(d\_sd\_of\_beta\_I,}
+     \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Density Plot of Raw Beta Standard Deviation values"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Standard Deviation Values"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_sd\_of\_beta\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  d\_sd\_of\_beta\_RGset\_SWAN\_I,}
+  \AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}
+  \AttributeTok{main =} \StringTok{"Density Plot of Normalized Beta Standard Deviation values"}\NormalTok{,}
+  \AttributeTok{xlab =} \StringTok{"Standard Deviation Values"}
+\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(d\_sd\_of\_beta\_RGset\_SWAN\_II, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+
+\CommentTok{\#Boxplots}
+
+\NormalTok{beta\_combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(df\_ctrl, df\_dis)}
+\NormalTok{group\_labels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df\_ctrl)), }\FunctionTok{rep}\NormalTok{(}\StringTok{"MUT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df\_dis)))}
+\NormalTok{group\_colors }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(group\_labels }\SpecialCharTok{==} \StringTok{"WT"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\FunctionTok{boxplot}\NormalTok{(beta\_combined,}
+        \AttributeTok{col =}\NormalTok{ group\_colors,}
+        \AttributeTok{xaxt =} \StringTok{"n"}\NormalTok{,}
+        \AttributeTok{main =} \StringTok{"Boxplot Raw Beta"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{h =} \FloatTok{0.6}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{1}
+\NormalTok{)}
+\NormalTok{short\_names }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(beta\_combined), }\StringTok{"\_"}\NormalTok{), }\StringTok{\textasciigrave{}}\AttributeTok{[}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+  \AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(short\_names),}
+  \AttributeTok{y =} \FunctionTok{par}\NormalTok{(}\StringTok{"usr"}\NormalTok{)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{0.02}\NormalTok{,}
+  \AttributeTok{labels =}\NormalTok{ short\_names,}
+  \AttributeTok{srt =} \DecValTok{45}\NormalTok{,}
+  \AttributeTok{adj =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{xpd =} \ConstantTok{TRUE}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{inset =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+  \AttributeTok{xpd =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{),}
+  \AttributeTok{bty =} \StringTok{"n"}
+\NormalTok{)}
+
+\NormalTok{sample\_group }\OtherTok{\textless{}{-}}\NormalTok{ targets}\SpecialCharTok{$}\NormalTok{Group}
+\CommentTok{\# the same for beta\_RGset\_SWAN}
+\NormalTok{beta\_SWAN\_WT }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[, sample\_group }\SpecialCharTok{==} \StringTok{"CTRL"}\NormalTok{]}
+\NormalTok{beta\_SWAN\_MUT }\OtherTok{\textless{}{-}}\NormalTok{ beta\_RGset\_SWAN[, sample\_group }\SpecialCharTok{==} \StringTok{"DIS"}\NormalTok{]}
+
+\NormalTok{beta\_SWAN\_combined }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(beta\_SWAN\_WT, beta\_SWAN\_MUT)}
+\NormalTok{group\_labels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(beta\_SWAN\_WT)), }\FunctionTok{rep}\NormalTok{(}\StringTok{"MUT"}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(beta\_SWAN\_MUT)))}
+\NormalTok{group\_colors }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(group\_labels }\SpecialCharTok{==} \StringTok{"WT"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{8}\NormalTok{))}
+\FunctionTok{boxplot}\NormalTok{(beta\_SWAN\_combined,}
+        \AttributeTok{col =}\NormalTok{ group\_colors,}
+        \AttributeTok{xaxt =} \StringTok{"n"}\NormalTok{,}
+        \AttributeTok{main =} \StringTok{"Boxplot of Normalized Beta"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{h =} \FloatTok{0.6}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{1}
+\NormalTok{)}
+\NormalTok{short\_names }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(beta\_combined), }\StringTok{"\_"}\NormalTok{), }\StringTok{\textasciigrave{}}\AttributeTok{[}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+  \AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(short\_names),}
+  \AttributeTok{y =} \FunctionTok{par}\NormalTok{(}\StringTok{"usr"}\NormalTok{)[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{{-}} \FloatTok{0.02}\NormalTok{,}
+  \AttributeTok{labels =}\NormalTok{ short\_names,}
+  \AttributeTok{srt =} \DecValTok{45}\NormalTok{,}
+  \AttributeTok{adj =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{xpd =} \ConstantTok{TRUE}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"topright"}\NormalTok{,}
+  \AttributeTok{inset =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+  \AttributeTok{xpd =} \ConstantTok{NA}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"WT"}\NormalTok{, }\StringTok{"MUT"}\NormalTok{),}
+  \AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"lightblue"}\NormalTok{, }\StringTok{"salmon"}\NormalTok{),}
+  \AttributeTok{bty =} \StringTok{"n"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-18-1.pdf}}
+
+\subsection{8. Perform a PCA on the matrix of normalized beta values
+generated in step 7, after
+normalization.}\label{perform-a-pca-on-the-matrix-of-normalized-beta-values-generated-in-step-7-after-normalization.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SampleSheet}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     SampleID    Sex Group   Sentrix_ID Sentrix_Position
+## 1 GSM5319592   Male  CTRL 200121140049           R01C02
+## 2 GSM5319603   Male   DIS   3999356129           R02C02
+## 3 GSM5319604 Female   DIS   3999547012           R02C01
+## 4 GSM5319607   Male  CTRL   3999547012           R03C02
+## 5 GSM5319609 Female   DIS   3999547016           R02C01
+## 6 GSM5319613 Female   DIS   3999547017           R02C01
+## 7 GSM5319615 Female  CTRL   3999547017           R04C01
+## 8 GSM5319616 Female  CTRL   3999547017           R06C01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_results }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(}\FunctionTok{t}\NormalTok{(beta\_RGset\_SWAN), }\AttributeTok{scale =}\NormalTok{ T) }\CommentTok{\# Run PCA on transposed methylation data (samples in rows)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(pca\_results))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                             PC1      PC2      PC3       PC4       PC5       PC6
+## Standard deviation     461.0346 285.7640 240.0880 203.61171 199.44183 169.17758
+## Proportion of Variance   0.4378   0.1682   0.1187   0.08539   0.08193   0.05895
+## Cumulative Proportion    0.4378   0.6060   0.7247   0.81010   0.89203   0.95098
+##                              PC7       PC8
+## Standard deviation     154.27243 1.638e-12
+## Proportion of Variance   0.04902 0.000e+00
+## Cumulative Proportion    1.00000 1.000e+00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(pca\_results, }\AttributeTok{col =} \StringTok{"salmon"}\NormalTok{) }\CommentTok{\# Scree plot}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-19-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{cex =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{pch =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{) }\CommentTok{\# PC1 vs PC2 scatterplot}
+\FunctionTok{text}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{labels =} \FunctionTok{rownames}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{x),}
+  \AttributeTok{pos =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{cex =} \FloatTok{0.5}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-20-1.pdf}}
+
+Observation: One sample (GSM5319609\_3999547016\_R02C01) appears to be
+an outlier due to a high PC1 value (\textasciitilde1003) in contrast
+with almost all others with negative values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Color samples by group}
+\NormalTok{SampleSheet}\SpecialCharTok{$}\NormalTok{Group }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Group)}
+\FunctionTok{levels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Group)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "CTRL" "DIS"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{palette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"purple"}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{cex =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{pch =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{col =}\NormalTok{ SampleSheet}\SpecialCharTok{$}\NormalTok{Group,}
+  \AttributeTok{xlab =} \StringTok{"PC1"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"PC2"}\NormalTok{,}
+  \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{),}
+  \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{),}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{labels =} \FunctionTok{rownames}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{x),}
+  \AttributeTok{cex =} \FloatTok{0.5}\NormalTok{,}
+  \AttributeTok{pos =} \DecValTok{1}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"bottomright"}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{levels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Group),}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nlevels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Group)),}
+  \AttributeTok{pch =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-21-1.pdf}}
+
+Observation: There's no clear separation between diseased and control
+groups. Two diseased samples deviate, but the rest cluster with
+controls.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Color samples by sex}
+\NormalTok{SampleSheet}\SpecialCharTok{$}\NormalTok{Sex }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sex)}
+\FunctionTok{palette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"pink"}\NormalTok{, }\StringTok{"blue"}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{cex =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{pch =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{col =}\NormalTok{ SampleSheet}\SpecialCharTok{$}\NormalTok{Sex,}
+  \AttributeTok{xlab =} \StringTok{"PC1"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"PC2"}\NormalTok{,}
+  \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{),}
+  \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
+\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{labels =} \FunctionTok{rownames}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{x),}
+  \AttributeTok{cex =} \FloatTok{0.5}\NormalTok{,}
+  \AttributeTok{pos =} \DecValTok{1}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"bottomright"}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{levels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sex),}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nlevels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sex)),}
+  \AttributeTok{pch =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-22-1.pdf}}
+
+Observation: Samples do not cluster by sex.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Color samples by Sentrix ID (array batch)}
+\NormalTok{SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID)}
+
+\FunctionTok{palette}\NormalTok{(}\FunctionTok{rainbow}\NormalTok{(}\FunctionTok{nlevels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID)))}
+\FunctionTok{plot}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{cex =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{pch =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{col =}\NormalTok{ SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID,}
+  \AttributeTok{xlab =} \StringTok{"PC1"}\NormalTok{,}
+  \AttributeTok{ylab =} \StringTok{"PC2"}\NormalTok{,}
+  \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{),}
+  \AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1000}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
+\NormalTok{)}
+\FunctionTok{text}\NormalTok{(}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  pca\_results}\SpecialCharTok{$}\NormalTok{x[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{labels =} \FunctionTok{rownames}\NormalTok{(pca\_results}\SpecialCharTok{$}\NormalTok{x),}
+  \AttributeTok{cex =} \FloatTok{0.5}\NormalTok{,}
+  \AttributeTok{pos =} \DecValTok{1}
+\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}
+  \StringTok{"bottomright"}\NormalTok{,}
+  \AttributeTok{legend =} \FunctionTok{levels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID),}
+  \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nlevels}\NormalTok{(SampleSheet}\SpecialCharTok{$}\NormalTok{Sentrix\_ID)),}
+  \AttributeTok{pch =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-23-1.pdf}}
+
+Observation: Samples with the same Sentrix ID tend to cluster together,
+indicating a possible batch effect. Furthermore, the two samples with
+positive PC1 consistently deviate from the others.
+
+\subsection{9. Using the matrix of normalized beta values generated in
+step 7, identify differentially methylated probes between group WT and
+group MUT applying
+T-test.}\label{using-the-matrix-of-normalized-beta-values-generated-in-step-7-identify-differentially-methylated-probes-between-group-wt-and-group-mut-applying-t-test.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Function to calculate p{-}value from t{-}test comparing groups for each probe}
+\NormalTok{p\_values }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  t\_test }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(x }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SampleSheet}\SpecialCharTok{$}\NormalTok{Group)}
+  \FunctionTok{return}\NormalTok{(t\_test}\SpecialCharTok{$}\NormalTok{p.value)}
+\NormalTok{\}}
+
+\NormalTok{p\_value\_ttest }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_RGset\_SWAN, }\DecValTok{1}\NormalTok{, p\_values)}
+
+\CommentTok{\# Combine the p{-}values with the original beta values}
+\NormalTok{final\_ttest }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(beta\_RGset\_SWAN, p\_value\_ttest)}
+\FunctionTok{head}\NormalTok{(final\_ttest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## cg00050873                      0.9192193                    0.8556647
+## cg00212031                      0.1366043                    0.1477547
+## cg00213748                      0.7559429                    0.7653214
+## cg00214611                      0.1099899                    0.1024328
+## cg00455876                      0.7072706                    0.5548413
+## cg01707559                      0.1289585                    0.1336012
+##            GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## cg00050873                    0.5769896                   0.90549679
+## cg00212031                    0.4043243                   0.06321223
+## cg00213748                    0.4128596                   0.72473868
+## cg00214611                    0.3921381                   0.07343885
+## cg00455876                    0.2259414                   0.73143021
+## cg01707559                    0.2630529                   0.05790620
+##            GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## cg00050873                    0.6146261                    0.4257168
+## cg00212031                    0.3391934                    0.3674561
+## cg00213748                    0.5056604                    0.3667118
+## cg00214611                    0.4108108                    0.5903479
+## cg00455876                    0.2483286                    0.2228430
+## cg01707559                    0.2933663                    0.3333333
+##            GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## cg00050873                    0.5516373                    0.5578825
+## cg00212031                    0.3701843                    0.4042891
+## cg00213748                    0.4501085                    0.4598099
+## cg00214611                    0.5478490                    0.4429735
+## cg00455876                    0.3120857                    0.2507317
+## cg01707559                    0.2911864                    0.3076923
+##            p_value_ttest
+## cg00050873     0.4308712
+## cg00212031     0.5156932
+## cg00213748     0.5104401
+## cg00214611     0.6249255
+## cg00455876     0.2678163
+## cg01707559     0.4617792
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(final\_ttest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512      9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Order by ascending p{-}value}
+\NormalTok{final\_ttest\_o }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest[}\FunctionTok{order}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_ttest), ]}
+\FunctionTok{head}\NormalTok{(final\_ttest\_o)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02
+## cg20647118                      0.4040863                    0.6583928
+## cg16662477                      0.4242814                    0.2815700
+## cg05156901                      0.5483542                    0.8617496
+## cg25282454                      0.7772508                    0.4705657
+## cg18077307                      0.7616569                    0.1941705
+## cg13754720                      0.7142990                    0.8822229
+##            GSM5319604_3999547012_R02C01 GSM5319607_3999547012_R03C02
+## cg20647118                    0.6574586                    0.4311548
+## cg16662477                    0.2676515                    0.4397610
+## cg05156901                    0.9434743                    0.4644201
+## cg25282454                    0.4630144                    0.7175122
+## cg18077307                    0.1840000                    0.7401670
+## cg13754720                    0.8936428                    0.7075311
+##            GSM5319609_3999547016_R02C01 GSM5319613_3999547017_R02C01
+## cg20647118                    0.6194896                    0.6648836
+## cg16662477                    0.2876656                    0.2897947
+## cg05156901                    0.9441860                    0.9210222
+## cg25282454                    0.5132163                    0.4405457
+## cg18077307                    0.2849448                    0.2355830
+## cg13754720                    0.8802867                    0.9117939
+##            GSM5319615_3999547017_R04C01 GSM5319616_3999547017_R06C01
+## cg20647118                    0.4045580                    0.4474548
+## cg16662477                    0.4194855                    0.4495287
+## cg05156901                    0.5209847                    0.5628345
+## cg25282454                    0.7652895                    0.7921874
+## cg18077307                    0.6397999                    0.6890751
+## cg13754720                    0.6719271                    0.6744583
+##            p_value_ttest
+## cg20647118  4.771362e-06
+## cg16662477  4.977920e-06
+## cg05156901  1.123825e-05
+## cg25282454  1.236924e-05
+## cg18077307  1.253973e-05
+## cg13754720  1.682224e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Filter the significant probes with p{-}value ≤ 0.05}
+\NormalTok{final\_ttest\_sig }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest\_o[final\_ttest\_o}\SpecialCharTok{$}\NormalTok{p\_value\_ttest }\SpecialCharTok{\textless{}=} \FloatTok{0.05}\NormalTok{, ]}
+\FunctionTok{dim}\NormalTok{(final\_ttest\_sig)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11169     9
+\end{verbatim}
+
+\subsection{10. Apply multiple test correction and set a significant
+threshold of 0.05. Observe differentially methylated probes considering
+nominal pValues and see the differences after Bonferroni correction and
+BH
+correction.}\label{apply-multiple-test-correction-and-set-a-significant-threshold-of-0.05.-observe-differentially-methylated-probes-considering-nominal-pvalues-and-see-the-differences-after-bonferroni-correction-and-bh-correction.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Using raw t{-}test only (without correction), we get about 11,100 probes with p{-}value \textless{} 0.05}
+
+\CommentTok{\# Apply Bonferroni correction}
+\NormalTok{final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_Bon }\OtherTok{\textless{}{-}} \FunctionTok{p.adjust}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_ttest, }\AttributeTok{method =} \StringTok{"bonferroni"}\NormalTok{)}
+\NormalTok{final\_ttest\_Bon }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest[}\FunctionTok{order}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_Bon), ]}
+\NormalTok{final\_ttest\_sig\_Bon }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest\_Bon[final\_ttest\_Bon}\SpecialCharTok{$}\NormalTok{p\_value\_Bon }\SpecialCharTok{\textless{}=} \FloatTok{0.05}\NormalTok{, ]}
+
+\FunctionTok{dim}\NormalTok{(final\_ttest\_sig\_Bon)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(final\_ttest\_sig\_Bon)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02  
+##  [3] GSM5319604_3999547012_R02C01   GSM5319607_3999547012_R03C02  
+##  [5] GSM5319609_3999547016_R02C01   GSM5319613_3999547017_R02C01  
+##  [7] GSM5319615_3999547017_R04C01   GSM5319616_3999547017_R06C01  
+##  [9] p_value_ttest                  p_value_Bon                   
+## <0 righe> (o 0-length row.names)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Apply Benjamini{-}Hochberg (FDR) correction}
+\NormalTok{final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_BH }\OtherTok{\textless{}{-}} \FunctionTok{p.adjust}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_ttest, }\AttributeTok{method =} \StringTok{"BH"}\NormalTok{)}
+\NormalTok{final\_ttest\_BH }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest[}\FunctionTok{order}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_BH), ]}
+\NormalTok{final\_ttest\_sig\_BH }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest\_BH[final\_ttest\_BH}\SpecialCharTok{$}\NormalTok{p\_value\_BH }\SpecialCharTok{\textless{}=} \FloatTok{0.05}\NormalTok{, ]}
+
+\FunctionTok{dim}\NormalTok{(final\_ttest\_sig\_BH)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(final\_ttest\_sig\_BH)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] GSM5319592_200121140049_R01C02 GSM5319603_3999356129_R02C02  
+##  [3] GSM5319604_3999547012_R02C01   GSM5319607_3999547012_R03C02  
+##  [5] GSM5319609_3999547016_R02C01   GSM5319613_3999547017_R02C01  
+##  [7] GSM5319615_3999547017_R04C01   GSM5319616_3999547017_R06C01  
+##  [9] p_value_ttest                  p_value_Bon                   
+## [11] p_value_BH                    
+## <0 righe> (o 0-length row.names)
+\end{verbatim}
+
+Observation: After multiple testing correction (Bonferroni or BH), no
+significant probes remain.
+
+\subsection{11.1 Produce a volcano plot of the results of differential
+methylation
+analysis.}\label{produce-a-volcano-plot-of-the-results-of-differential-methylation-analysis.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select only the beta values (methylation levels) from the final\_ttest dataframe}
+\NormalTok{beta\_first }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{]}
+
+\CommentTok{\# Separate samples by group and compute mean beta value per probe for controls (CTRL)}
+\NormalTok{beta\_first\_CTRL }\OtherTok{\textless{}{-}}\NormalTok{ beta\_first[, SampleSheet}\SpecialCharTok{$}\NormalTok{Group }\SpecialCharTok{==} \StringTok{"CTRL"}\NormalTok{]}
+\NormalTok{mean\_beta\_first\_CTRL }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_first\_CTRL, }\DecValTok{1}\NormalTok{, mean)}
+
+\CommentTok{\# Do the same for diseased samples (DIS)}
+\NormalTok{beta\_first\_DIS }\OtherTok{\textless{}{-}}\NormalTok{ beta\_first[, SampleSheet}\SpecialCharTok{$}\NormalTok{Group }\SpecialCharTok{==} \StringTok{"DIS"}\NormalTok{]}
+\NormalTok{mean\_beta\_first\_DIS }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(beta\_first\_DIS, }\DecValTok{1}\NormalTok{, mean)}
+
+\CommentTok{\# Compute delta beta values: difference in average methylation between diseased and control groups}
+\NormalTok{delta\_first }\OtherTok{\textless{}{-}}\NormalTok{ mean\_beta\_first\_DIS }\SpecialCharTok{{-}}\NormalTok{ mean\_beta\_first\_CTRL}
+\FunctionTok{head}\NormalTok{(delta\_first)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  cg00050873  cg00212031  cg00213748  cg00214611  cg00455876  cg01707559 
+## -0.11530967  0.07110964 -0.08501171  0.08036958 -0.18739098  0.05940256
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a dataframe for the volcano plot: delta values and {-}log10(p{-}value)}
+\NormalTok{toVolcPlot }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(delta\_first, }\SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(final\_ttest}\SpecialCharTok{$}\NormalTok{p\_value\_ttest))}
+\FunctionTok{head}\NormalTok{(toVolcPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            delta_first X.log10.final_ttest.p_value_ttest.
+## cg00050873 -0.11530967                          0.3656525
+## cg00212031  0.07110964                          0.2876086
+## cg00213748 -0.08501171                          0.2920552
+## cg00214611  0.08036958                          0.2041717
+## cg00455876 -0.18739098                          0.5721630
+## cg01707559  0.05940256                          0.3355656
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Basic volcano plot: delta (x{-}axis) vs {-}log10(p{-}value) (y{-}axis)}
+\FunctionTok{plot}\NormalTok{(toVolcPlot[, }\DecValTok{1}\NormalTok{], toVolcPlot[, }\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.5}\NormalTok{)}
+\SpecialCharTok{{-}} \FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{),}
+       \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+       \AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-26-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Highlight probes with delta \textgreater{} 0.1 and p{-}value \textless{} 0.01}
+\FunctionTok{plot}\NormalTok{(toVolcPlot[, }\DecValTok{1}\NormalTok{], toVolcPlot[, }\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{toHighlight }\OtherTok{\textless{}{-}}\NormalTok{ toVolcPlot[toVolcPlot[, }\DecValTok{1}\NormalTok{] }\SpecialCharTok{\textgreater{}} \FloatTok{0.1} \SpecialCharTok{\&}
+\NormalTok{                            toVolcPlot[, }\DecValTok{2}\NormalTok{] }\SpecialCharTok{\textgreater{}}\NormalTok{ (}\SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{)), ]}
+\FunctionTok{head}\NormalTok{(toHighlight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            delta_first X.log10.final_ttest.p_value_ttest.
+## cg00566331   0.1542509                           2.012104
+## cg01101873   0.1102911                           2.019490
+## cg03119829   0.2150689                           2.177002
+## cg03427058   0.1528870                           2.577110
+## cg04143909   0.1900659                           2.738637
+## cg04865726   0.1239909                           2.492541
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{points}\NormalTok{(}
+\NormalTok{  toHighlight[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  toHighlight[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{pch =} \DecValTok{16}\NormalTok{,}
+  \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"yellow"}
+\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{),}
+       \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+       \AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{v =} \FloatTok{0.1}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{4}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-27-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Highlight probes with absolute delta \textgreater{} 0.1 and p{-}value \textless{} 0.01 (both directions)}
+\FunctionTok{plot}\NormalTok{(toVolcPlot[, }\DecValTok{1}\NormalTok{], toVolcPlot[, }\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{toHighlight }\OtherTok{\textless{}{-}}\NormalTok{ toVolcPlot[}\FunctionTok{abs}\NormalTok{(toVolcPlot[, }\DecValTok{1}\NormalTok{]) }\SpecialCharTok{\textgreater{}} \FloatTok{0.1} \SpecialCharTok{\&}
+\NormalTok{                            toVolcPlot[, }\DecValTok{2}\NormalTok{] }\SpecialCharTok{\textgreater{}}\NormalTok{ (}\SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{)), ]}
+\FunctionTok{head}\NormalTok{(toHighlight)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            delta_first X.log10.final_ttest.p_value_ttest.
+## cg22363893  -0.1684171                           2.938605
+## cg00566331   0.1542509                           2.012104
+## cg01101873   0.1102911                           2.019490
+## cg01565291  -0.1632969                           2.532533
+## cg03119829   0.2150689                           2.177002
+## cg03427058   0.1528870                           2.577110
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{points}\NormalTok{(}
+\NormalTok{  toHighlight[, }\DecValTok{1}\NormalTok{],}
+\NormalTok{  toHighlight[, }\DecValTok{2}\NormalTok{],}
+  \AttributeTok{pch =} \DecValTok{16}\NormalTok{,}
+  \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"purple"}
+\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(}\FloatTok{0.01}\NormalTok{),}
+       \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+       \AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{v =} \FloatTok{0.1}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{4}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}
+  \AttributeTok{v =} \SpecialCharTok{{-}}\FloatTok{0.1}\NormalTok{,}
+  \AttributeTok{col =} \StringTok{"darkgrey"}\NormalTok{,}
+  \AttributeTok{lty =} \DecValTok{4}\NormalTok{,}
+  \AttributeTok{lwd =} \DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-28-1.pdf}}
+
+\subsection{11.2 Manhattan plot considering the significance of each
+probe and its location across all the human
+chromosomes.}\label{manhattan-plot-considering-the-significance-of-each-probe-and-its-location-across-all-the-human-chromosomes.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{final\_ttest}\SpecialCharTok{$}\NormalTok{IlmnID }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(final\_ttest)}
+\FunctionTok{colnames}\NormalTok{(final\_ttest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "GSM5319592_200121140049_R01C02" "GSM5319603_3999356129_R02C02"  
+##  [3] "GSM5319604_3999547012_R02C01"   "GSM5319607_3999547012_R03C02"  
+##  [5] "GSM5319609_3999547016_R02C01"   "GSM5319613_3999547017_R02C01"  
+##  [7] "GSM5319615_3999547017_R04C01"   "GSM5319616_3999547017_R06C01"  
+##  [9] "p_value_ttest"                  "p_value_Bon"                   
+## [11] "p_value_BH"                     "IlmnID"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Merge statistical results with Illumina probe annotation}
+\NormalTok{final\_ttest\_annotated }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(final\_ttest, Illumina450Manifest\_clean, }\AttributeTok{by =}
+                                 \StringTok{"IlmnID"}\NormalTok{)}
+\FunctionTok{dim}\NormalTok{(final\_ttest\_annotated)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512     44
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare data for the Manhattan plot}
+\NormalTok{input\_Manhattan }\OtherTok{\textless{}{-}}\NormalTok{ final\_ttest\_annotated[}\FunctionTok{colnames}\NormalTok{(final\_ttest\_annotated) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"IlmnID"}\NormalTok{, }\StringTok{"CHR"}\NormalTok{, }\StringTok{"MAPINFO"}\NormalTok{, }\StringTok{"p\_value\_ttest"}\NormalTok{)]}
+\FunctionTok{dim}\NormalTok{(input\_Manhattan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 485512      4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(input\_Manhattan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       IlmnID p_value_ttest CHR   MAPINFO
+## 1 cg00000029     0.7332146  16  53468112
+## 2 cg00000108     0.4344968   3  37459206
+## 3 cg00000109     0.3571960   3 171916037
+## 4 cg00000165     0.5971056   1  91194674
+## 5 cg00000236     0.4292669   8  42263294
+## 6 cg00000289     0.4399760  14  69341139
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Factor w/ 24 levels "1","10","11",..: 8 16 16 1 21 6 8 21 1 7 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{levels}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "1"  "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "2"  "20" "21" "22"
+## [16] "3"  "4"  "5"  "6"  "7"  "8"  "9"  "X"  "Y"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set correct chromosome order (1–22, X, Y)}
+\NormalTok{order\_chr }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"1"}\NormalTok{,}
+  \StringTok{"2"}\NormalTok{,}
+  \StringTok{"3"}\NormalTok{,}
+  \StringTok{"4"}\NormalTok{,}
+  \StringTok{"5"}\NormalTok{,}
+  \StringTok{"6"}\NormalTok{,}
+  \StringTok{"7"}\NormalTok{,}
+  \StringTok{"8"}\NormalTok{,}
+  \StringTok{"9"}\NormalTok{,}
+  \StringTok{"10"}\NormalTok{,}
+  \StringTok{"11"}\NormalTok{,}
+  \StringTok{"12"}\NormalTok{,}
+  \StringTok{"13"}\NormalTok{,}
+  \StringTok{"14"}\NormalTok{,}
+  \StringTok{"15"}\NormalTok{,}
+  \StringTok{"16"}\NormalTok{,}
+  \StringTok{"17"}\NormalTok{,}
+  \StringTok{"18"}\NormalTok{,}
+  \StringTok{"19"}\NormalTok{,}
+  \StringTok{"20"}\NormalTok{,}
+  \StringTok{"21"}\NormalTok{,}
+  \StringTok{"22"}\NormalTok{,}
+  \StringTok{"X"}\NormalTok{,}
+  \StringTok{"Y"}
+\NormalTok{)}
+\NormalTok{input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR, }\AttributeTok{levels =}\NormalTok{ order\_chr)}
+\FunctionTok{levels}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"
+## [16] "16" "17" "18" "19" "20" "21" "22" "X"  "Y"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR)}
+\FunctionTok{table}\NormalTok{(input\_Manhattan}\SpecialCharTok{$}\NormalTok{CHR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     1     2     3     4     5     6     7     8     9    10    11    12    13 
+## 46857 34810 25159 20464 24327 36611 30017 20950  9861 24388 28794 24539 12285 
+##    14    15    16    17    18    19    20    21    22    23    24 
+## 15078 15259 21969 27879  5922 25521 10379  4243  8552 11232   416
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Basic Manhattan plot}
+\FunctionTok{manhattan}\NormalTok{(}
+\NormalTok{  input\_Manhattan,}
+  \AttributeTok{snp =} \StringTok{"IlmnID"}\NormalTok{,}
+  \AttributeTok{chr =} \StringTok{"CHR"}\NormalTok{,}
+  \AttributeTok{bp =} \StringTok{"MAPINFO"}\NormalTok{,}
+  \AttributeTok{p =} \StringTok{"p\_value\_ttest"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-29-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\SpecialCharTok{{-}} \FunctionTok{log10}\NormalTok{(}\FloatTok{0.00001}\NormalTok{) }\CommentTok{\# Log threshold to identify significance line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Manhattan plot with annotation of significant probes}
+\FunctionTok{manhattan}\NormalTok{(}
+\NormalTok{  input\_Manhattan,}
+  \AttributeTok{snp =} \StringTok{"IlmnID"}\NormalTok{,}
+  \AttributeTok{chr =} \StringTok{"CHR"}\NormalTok{,}
+  \AttributeTok{bp =} \StringTok{"MAPINFO"}\NormalTok{,}
+  \AttributeTok{p =} \StringTok{"p\_value\_ttest"}\NormalTok{,}
+  \AttributeTok{annotatePval =} \FloatTok{0.00001}\NormalTok{,}
+  \AttributeTok{col =} \FunctionTok{rainbow}\NormalTok{(}\DecValTok{24}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-29-2.pdf}}
+
+\subsection{12. Produce an heatmap of the top 100 significant,
+differentially methylated
+probes.}\label{produce-an-heatmap-of-the-top-100-significant-differentially-methylated-probes.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extract beta values of the top 100 significant probes (columns = samples)}
+\NormalTok{input\_heatmap }\OtherTok{=} \FunctionTok{as.matrix}\NormalTok{(final\_ttest\_sig[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{])}
+\NormalTok{SampleSheet}\SpecialCharTok{$}\NormalTok{Group}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] CTRL DIS  DIS  CTRL DIS  DIS  CTRL CTRL
+## Levels: CTRL DIS
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colorbar }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"green"}\NormalTok{)}
+
+
+\CommentTok{\# Generate heatmap with average linkage clustering on both rows and columns}
+\NormalTok{col2 }\OtherTok{=} \FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"red"}\NormalTok{))(}\DecValTok{100}\NormalTok{)}
+\FunctionTok{heatmap.2}\NormalTok{(}
+\NormalTok{  input\_heatmap,}
+  \AttributeTok{col =}\NormalTok{ col2,}
+  \AttributeTok{Rowv =}\NormalTok{ T,}
+  \AttributeTok{Colv =}\NormalTok{ T,}
+  \AttributeTok{hclustfun =} \ControlFlowTok{function}\NormalTok{(x)}
+    \FunctionTok{hclust}\NormalTok{(x, }\AttributeTok{method =} \StringTok{\textquotesingle{}average\textquotesingle{}}\NormalTok{),}
+  \AttributeTok{dendrogram =} \StringTok{"both"}\NormalTok{,}
+  \AttributeTok{key =}\NormalTok{ T,}
+  \AttributeTok{ColSideColors =}\NormalTok{ colorbar,}
+  \AttributeTok{density.info =} \StringTok{"none"}\NormalTok{,}
+  \AttributeTok{trace =} \StringTok{"none"}\NormalTok{,}
+  \AttributeTok{scale =} \StringTok{"none"}\NormalTok{,}
+  \AttributeTok{symm =}\NormalTok{ F,}
+  \AttributeTok{main =} \StringTok{"Differentially methylated probes"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{DNA_RNA_Project_files/figure-latex/unnamed-chunk-30-1.pdf}}
+
+\end{document}
