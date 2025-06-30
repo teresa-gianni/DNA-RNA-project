@@ -29,10 +29,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Load required libraries for methylation analysis
+suppressPackageStartupMessages({
 library(minfi)
 library(minfiData)
 library(qqman)
 library(gplots)
+})
 
 setwd(".")
 baseDir <- ("../Input_Data")
@@ -529,7 +531,7 @@ legend(
 )
 ```
 
-## 8. Perform a PCA on the matrix of normalized beta values generated in step 7, after normalization. 
+## 8. Perform a PCA on the matrix of normalized beta values generated in step 7, after normalization.
 
 ```{r}
 
@@ -724,7 +726,7 @@ head(final_ttest_sig_BH)
 Observation: After multiple testing correction (Bonferroni or BH), no
 significant probes remain.
 
-## 11.1  Produce a volcano plot of the results of differential methylation analysis.
+## 11.1 Produce a volcano plot of the results of differential methylation analysis.
 
 ```{r}
 # Select only the beta values (methylation levels) from the final_ttest dataframe
@@ -812,7 +814,7 @@ abline(
 )
 ```
 
-## 11.2  Manhattan plot considering the significance of each probe and its location across all the human chromosomes.
+## 11.2 Manhattan plot considering the significance of each probe and its location across all the human chromosomes.
 
 ```{r}
 final_ttest$IlmnID <- rownames(final_ttest)
