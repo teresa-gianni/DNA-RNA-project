@@ -4,10 +4,10 @@
 ## 1. Load Raw Data with minfi and create an object called RGset storing the RGChannelSet object:
 
 #Install libraries for methylation analysis 
-if (!require("BiocManager", quietly = TRUE))
-     install.packages("BiocManager") 
-BiocManager::install("minfi")
-BiocManager::install("minfiData")
+#if (!require("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager") 
+#BiocManager::install("minfi")
+#BiocManager::install("minfiData")
   
 
 # Load required libraries for methylation analysis
@@ -18,7 +18,7 @@ suppressPackageStartupMessages({
    library(gplots)
  })
  
-setwd(".")
+#setwd(".")
 baseDir <- ("../Input_Data")
 SampleSheet <- read.csv("../Input_Data/SampleSheet_Report_II.csv", header = T)
 targets <- read.metharray.sheet(baseDir) # read sample sheet metadata
