@@ -1,4 +1,4 @@
-structure of repository 
+Structure of repository 
 ```
 .
 ├── Code
