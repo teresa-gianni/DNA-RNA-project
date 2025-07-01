@@ -240,17 +240,14 @@ beta_RGset_SWAN_II <- beta_RGset_SWAN[rownames(beta_RGset_SWAN) %in% dfII$IlmnID
 mean_of_beta_RGset_SWAN_I <- apply(beta_RGset_SWAN_I, 1, mean)
 mean_of_beta_RGset_SWAN_II <- apply(beta_RGset_SWAN_II, 1, mean)
 
-d_mean_of_beta_RGset_SWAN_I <- density(mean_of_beta_RGset_SWAN_I, na.rm =
-                                         T)
-d_mean_of_beta_RGset_SWAN_II <- density(mean_of_beta_RGset_SWAN_II, na.rm =
-                                          T)
+d_mean_of_beta_RGset_SWAN_I <- density(mean_of_beta_RGset_SWAN_I, na.rm = T)
+d_mean_of_beta_RGset_SWAN_II <- density(mean_of_beta_RGset_SWAN_II, na.rm = T)
 
 sd_of_beta_RGset_SWAN_I <- apply(beta_RGset_SWAN_I, 1, sd)
 sd_of_beta_RGset_SWAN_II <- apply(beta_RGset_SWAN_II, 1, sd)
 
 d_sd_of_beta_RGset_SWAN_I <- density(sd_of_beta_RGset_SWAN_I, na.rm = T)
-d_sd_of_beta_RGset_SWAN_II <- density(sd_of_beta_RGset_SWAN_II, na.rm =
-                                        T)
+d_sd_of_beta_RGset_SWAN_II <- density(sd_of_beta_RGset_SWAN_II, na.rm = T)
 
 #PLOT with 6 panels, confronting raw and normalized data
 
@@ -356,6 +353,7 @@ legend(
 )
 
 ## 8. Perform a PCA on the matrix of normalized beta values generated in step 7, after normalization.
+par(mfrow=c(1,1))
 
 SampleSheet
 pca_results <- prcomp(t(beta_RGset_SWAN), scale = T) # Run PCA on transposed methylation data (samples in rows)
